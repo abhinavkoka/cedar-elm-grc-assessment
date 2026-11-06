@@ -1,0 +1,8 @@
+# Toolchain evidence - recorded 2026-10-26T19:16:11+00:00 on cedar-intake01
+oscap:        OpenSCAP command line tool (oscap) 1.3.9
+lynis:        3.0.9
+SSG content:  ComplianceAsCode v0.1.82
+SSG sha256:   e311189ac70ff73be54121311fca324d6188f8c12ab53416090f595ff00e070c
+Profile:      xccdf_org.ssgproject.content_profile_cis_level1_server
+Benchmark:    CIS Ubuntu Linux 24.04 LTS Benchmark for Level 1 - Server
+OS:           Ubuntu 24.04.5 LTS, kernel 6.8.0-147-generic

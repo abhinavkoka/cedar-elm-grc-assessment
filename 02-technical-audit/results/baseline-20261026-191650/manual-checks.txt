@@ -1,0 +1,104 @@
+Host: cedar-intake01   Collected: 2026-10-26T19:24:58+00:00   Label: baseline
+OS: Ubuntu 24.04.5 LTS   Kernel: 6.8.0-147-generic
+
+===== MC-01 Interactive accounts (UID >= 1000) and last login =====
+labadmin uid=1000 shell=/bin/bash gecos=Lab Admin
+jmorales uid=1001 shell=/bin/bash gecos=J. Morales (contract developer, 2023-2024)
+Username         Port     From                                       Latest
+labadmin             pts/0    10.0.2.2                                  Mon Oct 26 19:02:00 +0000 2026
+jmorales                                                            **Never logged in**
+
+===== MC-02 Account lock/expiry status =====
+labadmin: P | expires: never
+jmorales: P | expires: never
+
+===== MC-03 Privileged group membership (sudo, adm) =====
+sudo:x:27:labadmin,jmorales
+adm:x:4:syslog,labadmin
+
+===== MC-04 Effective SSH daemon settings =====
+logingracetime 120
+maxauthtries 6
+clientaliveinterval 0
+permitrootlogin without-password
+pubkeyauthentication yes
+passwordauthentication yes
+x11forwarding yes
+banner none
+
+===== MC-05 Listening network services =====
+udp UNCONN 0      0            127.0.0.54:53   0.0.0.0:* users:(("systemd-resolve",pid=575,fd=16))                                               
+udp UNCONN 0      0         127.0.0.53%lo:53   0.0.0.0:* users:(("systemd-resolve",pid=575,fd=14))                                               
+udp UNCONN 0      0      10.0.2.15%enp0s3:68   0.0.0.0:* users:(("systemd-network",pid=814,fd=22))                                               
+tcp LISTEN 0      4096         127.0.0.54:53   0.0.0.0:* users:(("systemd-resolve",pid=575,fd=17))                                               
+tcp LISTEN 0      4096      127.0.0.53%lo:53   0.0.0.0:* users:(("systemd-resolve",pid=575,fd=15))                                               
+tcp LISTEN 0      200             0.0.0.0:5432 0.0.0.0:* users:(("postgres",pid=4509,fd=6))                                                      
+tcp LISTEN 0      511             0.0.0.0:443  0.0.0.0:* users:(("nginx",pid=4498,fd=7),("nginx",pid=4497,fd=7),("nginx",pid=4496,fd=7))         
+tcp LISTEN 0      2048          127.0.0.1:8000 0.0.0.0:* users:(("gunicorn",pid=4501,fd=5),("gunicorn",pid=4500,fd=5),("gunicorn",pid=4481,fd=5))
+tcp LISTEN 0      511             0.0.0.0:80   0.0.0.0:* users:(("nginx",pid=4498,fd=5),("nginx",pid=4497,fd=5),("nginx",pid=4496,fd=5))         
+tcp LISTEN 0      4096            0.0.0.0:22   0.0.0.0:* users:(("sshd",pid=4489,fd=3),("systemd",pid=1,fd=168))                                 
+tcp LISTEN 0      200                [::]:5432    [::]:* users:(("postgres",pid=4509,fd=7))                                                      
+tcp LISTEN 0      511                [::]:80      [::]:* users:(("nginx",pid=4498,fd=6),("nginx",pid=4497,fd=6),("nginx",pid=4496,fd=6))         
+tcp LISTEN 0      4096               [::]:22      [::]:* users:(("sshd",pid=4489,fd=4),("systemd",pid=1,fd=172))                                 
+
+===== MC-06 Host firewall =====
+Status: inactive
+
+===== MC-07 PostgreSQL network exposure =====
+*
+local   all             postgres                                peer
+local   all             all                                     peer
+host    all             all             127.0.0.1/32            scram-sha-256
+host    all             all             ::1/128                 scram-sha-256
+local   replication     all                                     peer
+host    replication     all             127.0.0.1/32            scram-sha-256
+host    replication     all             ::1/128                 scram-sha-256
+host    intake    intake    10.0.0.0/8    scram-sha-256
+
+===== MC-08 ePHI data store permissions (/srv/intake/uploads) =====
+drwxrwxrwx intake:www-data /srv/intake/uploads
+world-writable files: 60
+total files: 60
+
+===== MC-09 Patch status =====
+upgradable packages: 27
+security updates pending: 0
+APT::Periodic::Unattended-Upgrade "0";
+
+===== MC-10 Running services =====
+cron.service
+dbus.service
+fwupd.service
+getty@tty1.service
+intake-portal.service
+ModemManager.service
+multipathd.service
+nginx.service
+packagekit.service
+polkit.service
+postgresql@16-main.service
+rsyslog.service
+ssh.service
+systemd-journald.service
+systemd-logind.service
+systemd-networkd.service
+systemd-resolved.service
+systemd-timesyncd.service
+systemd-udevd.service
+udisks2.service
+unattended-upgrades.service
+upower.service
+user@1000.service
+
+===== MC-11 TLS certificate on portal =====
+subject=CN = intake.cedarelmpt.example
+issuer=CN = intake.cedarelmpt.example
+notAfter=Jan 28 19:10:47 2029 GMT
+
+===== MC-12 Remote log forwarding =====
+no rsyslog forwarding configured
+
+===== MC-13 Audit daemon (HIPAA 164.312(b)) =====
+inactive
+auditd not installed/active
+audit rules loaded: 0

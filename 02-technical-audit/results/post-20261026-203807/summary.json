@@ -1,0 +1,63 @@
+{
+  "label": "post-20261026-203807",
+  "rules_in_profile": 408,
+  "results": {
+    "pass": 329,
+    "fail": 28,
+    "notapplicable": 51
+  },
+  "raw_pass_rate_pct": 92.2,
+  "tailored_pass_rate_pct": 93.4,
+  "not_applicable_by_design": 27,
+  "failed_rules": 23,
+  "failed_by_severity": {
+    "low": 1,
+    "medium": 18,
+    "high": 2,
+    "unknown": 2
+  },
+  "failed_by_cis_section": {
+    "1 Initial Setup": 4,
+    "2 Services": 5,
+    "4 Host-Based Firewall": 1,
+    "5 Access Control": 13
+  },
+  "failed_by_cis_subsection": {
+    "1.1 Filesystem": 1,
+    "1.3 Mandatory Access Control (AppArmor)": 1,
+    "1.4 Bootloader": 2,
+    "2.1 Server Services": 4,
+    "2.4 Job Schedulers": 1,
+    "4.2 UFW": 1,
+    "5.3 PAM": 12,
+    "5.4 User Accounts and Environment": 1
+  },
+  "failed_by_800_53_family": {
+    "IA Identification and Authentication": 12,
+    "CM Configuration Management": 6,
+    "AC Access Control": 3,
+    "SC System and Communications Protection": 2
+  },
+  "failed_by_csf_2_0": {
+    "PR.AA-03": 12,
+    "PR.PS-01": 6,
+    "PR.AA-05": 3,
+    "PR.IR-01": 1,
+    "PR.AA-01": 1
+  },
+  "failed_with_hipaa_citation": 2,
+  "failed_with_accepted_exception": 4,
+  "open_failed_rules": 19,
+  "lynis_hardening_index": 74,
+  "lynis_warnings": [
+    {
+      "id": "MAIL-8818",
+      "text": "Found some information disclosure in SMTP banner (OS or software name)"
+    },
+    {
+      "id": "FINT-4316",
+      "text": "No AIDE database was found, needed for AIDE functionality"
+    }
+  ],
+  "lynis_suggestion_count": 48
+}

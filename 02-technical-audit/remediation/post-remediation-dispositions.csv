@@ -1,0 +1,14 @@
+cis_ref,rule_id,severity,post_result,disposition,root_cause,poam_id
+1.1.2.1.1,partition_for_tmp,low,fail,Deferred,No separate /tmp partition; requires rebuild on partitioned template,POAM-09
+1.3.1.3,all_apparmor_profiles_in_enforce_complain_mode,medium,fail,Open,Some AppArmor profiles not in enforce or complain mode,POAM-26
+1.4.1,grub2_password,high,fail,Risk accepted,Compensating control: hypervisor console restricted to IT Manager,
+1.4.1,grub2_uefi_password,high,fail,Risk accepted,Compensating control: hypervisor console restricted to IT Manager,
+2.1.18,package_nginx_removed,unknown,fail,Business exception,nginx is the required TLS front end for the portal,
+2.1.18,service_nginx_disabled,unknown,fail,Business exception,nginx is the required TLS front end for the portal,
+2.1.21,has_nonlocal_mta,medium,fail (regressed),Open,Postfix installed as a dependency of AIDE (via bsd-mailx) during remediation; listens on 0.0.0.0:25,POAM-24
+2.1.21,postfix_network_listening_disabled,medium,fail (newly applicable),Open,Same root cause as has_nonlocal_mta,POAM-24
+2.4.1.8,file_groupowner_cron_allow,medium,fail (regressed),Open,/etc/cron.allow created by remediation after the group-owner rule had already been evaluated as pass,POAM-24
+4.2.6,ufw_rules_for_open_ports,medium,fail,Open,Ports 80 (nginx default site) and 25 (Postfix) listen on non-loopback addresses without explicit UFW rules; blocked by default deny,POAM-26
+5.3.3.2.1-5.3.3.2.8,accounts_password_pam_* (12 rules),medium,fail (newly applicable),Open,libpam-pwquality installed in the same single-pass run; rules were not applicable when remediation evaluated them,POAM-25
+5.4.2.5,root_path_all_dirs,medium,fail,Open,An entry in root's PATH is not an existing directory,POAM-26
+4.3.x,nftables rules (5),medium,fail,N/A by design,UFW selected as the host firewall (CIS 4.1.1 allows one firewall utility),

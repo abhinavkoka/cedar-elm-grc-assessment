@@ -1,0 +1,131 @@
+Host: cedar-intake01   Collected: 2026-10-26T20:45:28+00:00   Label: post
+OS: Ubuntu 24.04.5 LTS   Kernel: 6.8.0-147-generic
+
+===== MC-01 Interactive accounts (UID >= 1000) and last login =====
+labadmin uid=1000 shell=/bin/bash gecos=Lab Admin
+jmorales uid=1001 shell=/usr/sbin/nologin gecos=J. Morales (contract developer, 2023-2024)
+Username         Port     From                                       Latest
+labadmin             pts/0    10.0.2.2                                  Mon Oct 26 20:28:20 +0000 2026
+jmorales                                                            **Never logged in**
+
+===== MC-02 Account lock/expiry status =====
+labadmin: P | expires: never
+jmorales: L | expires: Jan 01, 1970
+
+===== MC-03 Privileged group membership (sudo, adm) =====
+sudo:x:27:labadmin
+adm:x:4:syslog,labadmin
+
+===== MC-04 Effective SSH daemon settings =====
+logingracetime 60
+maxauthtries 4
+clientaliveinterval 300
+permitrootlogin no
+pubkeyauthentication yes
+passwordauthentication yes
+x11forwarding yes
+banner /etc/issue.net
+allowusers labadmin
+
+===== MC-05 Listening network services =====
+udp UNCONN 0      0            127.0.0.54:53   0.0.0.0:* users:(("systemd-resolve",pid=574,fd=16))                                               
+udp UNCONN 0      0         127.0.0.53%lo:53   0.0.0.0:* users:(("systemd-resolve",pid=574,fd=14))                                               
+udp UNCONN 0      0      10.0.2.15%enp0s3:68   0.0.0.0:* users:(("systemd-network",pid=767,fd=21))                                               
+tcp LISTEN 0      511             0.0.0.0:443  0.0.0.0:* users:(("nginx",pid=976,fd=7),("nginx",pid=975,fd=7),("nginx",pid=974,fd=7))            
+tcp LISTEN 0      2048          127.0.0.1:8000 0.0.0.0:* users:(("gunicorn",pid=1162,fd=5),("gunicorn",pid=1153,fd=5),("gunicorn",pid=1079,fd=5))
+tcp LISTEN 0      4096      127.0.0.53%lo:53   0.0.0.0:* users:(("systemd-resolve",pid=574,fd=15))                                               
+tcp LISTEN 0      511             0.0.0.0:80   0.0.0.0:* users:(("nginx",pid=976,fd=5),("nginx",pid=975,fd=5),("nginx",pid=974,fd=5))            
+tcp LISTEN 0      100             0.0.0.0:25   0.0.0.0:* users:(("master",pid=1269,fd=13))                                                       
+tcp LISTEN 0      4096            0.0.0.0:22   0.0.0.0:* users:(("sshd",pid=1280,fd=3),("systemd",pid=1,fd=88))                                  
+tcp LISTEN 0      200           127.0.0.1:5432 0.0.0.0:* users:(("postgres",pid=943,fd=6))                                                       
+tcp LISTEN 0      4096         127.0.0.54:53   0.0.0.0:* users:(("systemd-resolve",pid=574,fd=17))                                               
+tcp LISTEN 0      511                [::]:80      [::]:* users:(("nginx",pid=976,fd=6),("nginx",pid=975,fd=6),("nginx",pid=974,fd=6))            
+tcp LISTEN 0      100                [::]:25      [::]:* users:(("master",pid=1269,fd=14))                                                       
+tcp LISTEN 0      4096               [::]:22      [::]:* users:(("sshd",pid=1280,fd=4),("systemd",pid=1,fd=89))                                  
+
+===== MC-06 Host firewall =====
+Status: active
+Logging: on (low)
+Default: deny (incoming), deny (outgoing), disabled (routed)
+New profiles: skip
+
+To                         Action      From
+--                         ------      ----
+Anywhere on lo             ALLOW IN    Anywhere                  
+Anywhere                   DENY IN     127.0.0.0/8               
+443/tcp                    ALLOW IN    Anywhere                   # Referral portal
+22/tcp                     ALLOW IN    Anywhere                   # Admin SSH
+Anywhere (v6) on lo        ALLOW IN    Anywhere (v6)             
+Anywhere (v6)              DENY IN     ::1                       
+443/tcp (v6)               ALLOW IN    Anywhere (v6)              # Referral portal
+22/tcp (v6)                ALLOW IN    Anywhere (v6)              # Admin SSH
+
+Anywhere                   ALLOW OUT   Anywhere on lo            
+53                         ALLOW OUT   Anywhere                   # DNS
+80/tcp                     ALLOW OUT   Anywhere                   # APT
+443/tcp                    ALLOW OUT   Anywhere                   # APT/HTTPS
+123/udp                    ALLOW OUT   Anywhere                   # NTP
+Anywhere (v6)              ALLOW OUT   Anywhere (v6) on lo       
+53 (v6)                    ALLOW OUT   Anywhere (v6)              # DNS
+80/tcp (v6)                ALLOW OUT   Anywhere (v6)              # APT
+443/tcp (v6)               ALLOW OUT   Anywhere (v6)              # APT/HTTPS
+123/udp (v6)               ALLOW OUT   Anywhere (v6)              # NTP
+
+
+===== MC-07 PostgreSQL network exposure =====
+localhost
+local   all             postgres                                peer
+local   all             all                                     peer
+host    all             all             127.0.0.1/32            scram-sha-256
+host    all             all             ::1/128                 scram-sha-256
+local   replication     all                                     peer
+host    replication     all             127.0.0.1/32            scram-sha-256
+host    replication     all             ::1/128                 scram-sha-256
+
+===== MC-08 ePHI data store permissions (/srv/intake/uploads) =====
+drwxr-x--- intake:www-data /srv/intake/uploads
+world-writable files: 0
+total files: 60
+
+===== MC-09 Patch status =====
+upgradable packages: 0
+security updates pending: 0
+APT::Periodic::Unattended-Upgrade "1";
+
+===== MC-10 Running services =====
+auditd.service
+cron.service
+dbus.service
+getty@tty1.service
+intake-portal.service
+ModemManager.service
+multipathd.service
+networkd-dispatcher.service
+nginx.service
+packagekit.service
+polkit.service
+postfix@-.service
+postgresql@16-main.service
+rsyslog.service
+ssh.service
+systemd-journald.service
+systemd-logind.service
+systemd-networkd.service
+systemd-resolved.service
+systemd-timesyncd.service
+systemd-udevd.service
+udisks2.service
+unattended-upgrades.service
+user@1000.service
+
+===== MC-11 TLS certificate on portal =====
+subject=CN = intake.cedarelmpt.example
+issuer=CN = intake.cedarelmpt.example
+notAfter=Jan 28 19:10:47 2029 GMT
+
+===== MC-12 Remote log forwarding =====
+no rsyslog forwarding configured
+
+===== MC-13 Audit daemon (HIPAA 164.312(b)) =====
+active
+audit rules loaded: 9
